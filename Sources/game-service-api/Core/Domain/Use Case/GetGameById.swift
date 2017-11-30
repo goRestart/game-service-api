@@ -9,7 +9,7 @@ public struct GetGameById {
     self.gameService = gameService
   }
   
-  public func execute(with id: CoreService.Identifier<Game>) throws -> Game {
+  public func execute(with id: CoreService.Identifier<Game>) throws -> Game? {
     return try gameService.get(with: id)
   }
 }

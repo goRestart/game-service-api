@@ -13,9 +13,10 @@ struct GameService {
     self.gameMapper = gameMapper
   }
   
-  func get(with id: CoreService.Identifier<Game>) throws -> Game {
+  func get(with id: CoreService.Identifier<Game>) throws -> Game? {
     let response = try client.get("/\(id.value)")
     
+    guard response.status == .ok else { return nil }
     guard let json = response.json else {
       throw GameError.invalidResponse
     }
