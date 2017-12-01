@@ -4,7 +4,8 @@ extension Assembly {
   var gameService: GameService {
     return GameService(
       client: httpClient,
-      gameMapper: gameMapper
+      gameMapper: gameMapper,
+      gameConsoleMapper: gameConsoleMapper
     )
   }
 }
