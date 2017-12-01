@@ -17,26 +17,25 @@ struct GameService {
   }
   
   func get(with id: CoreService.Identifier<Game>) throws -> Game? {
-    let response = try client.get(
-      Endpoint.gameById(id).path
-    )
-    let json = try unwrap(response)
+    let json = try unwrap(.gameById(id))
     return try gameMapper.map(json)
   }
   
   func get(with id: CoreService.Identifier<GameConsole>) throws -> GameConsole? {
-    let response = try client.get(
-      Endpoint.gameConsoleById(id).path
-    )
-    let json = try unwrap(response)
+    let json = try unwrap(.gameConsoleById(id))
     return try gameConsoleMapper.map(json)
   }
   
-  private func unwrap(_ response: Response) throws -> JSON {
-    guard response.status == .ok,
-      let json = response.json else {
-      throw GameError.invalidResponse
+  private func unwrap(_ endpoint: Endpoint) throws -> JSON? {
+    do {
+      let response = try client.get(endpoint.path)
+      guard response.status == .ok,
+        let json = response.json else {
+          return nil
+      }
+      return json
+    } catch {
+      return nil
     }
-    return json
   }
 }
