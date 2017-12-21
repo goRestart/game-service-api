@@ -1,8 +1,12 @@
 import CoreService
 import Vapor
 
-extension Assembly {
-  var httpClient: ClientProtocol {
+protocol ClientProvider {
+  func client() -> ClientProtocol
+}
+
+extension Assembly: ClientProvider {
+  func client() -> ClientProtocol {
     return try! EngineClient
       .factory
       .makeClient(

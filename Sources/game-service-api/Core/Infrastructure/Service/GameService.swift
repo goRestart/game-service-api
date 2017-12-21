@@ -3,15 +3,15 @@ import Vapor
 
 struct GameService {
   
-  private let client: ClientProtocol
+  private let clientProvider: ClientProvider
   private let gameMapper: GameMapper
   private let gameConsoleMapper: GameConsoleMapper
   
-  init(client: ClientProtocol,
+  init(clientProvider: ClientProvider,
        gameMapper: GameMapper,
        gameConsoleMapper: GameConsoleMapper)
   {
-    self.client = client
+    self.clientProvider = clientProvider
     self.gameMapper = gameMapper
     self.gameConsoleMapper = gameConsoleMapper
   }
@@ -28,7 +28,7 @@ struct GameService {
   
   private func unwrap(_ endpoint: Endpoint) throws -> JSON? {
     do {
-      let response = try client.get(endpoint.path)
+      let response = try clientProvider.client().get(endpoint.path)
       guard response.status == .ok,
         let json = response.json else {
           return nil

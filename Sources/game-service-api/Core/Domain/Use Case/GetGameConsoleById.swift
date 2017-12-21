@@ -1,5 +1,4 @@
 import CoreService
-import Vapor
 
 public struct GetGameConsoleById {
   
