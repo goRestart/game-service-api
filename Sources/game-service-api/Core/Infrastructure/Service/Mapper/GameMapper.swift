@@ -4,7 +4,7 @@ import Vapor
 private struct JSONKey {
   static let identifier = "id"
   static let name = "name"
-  static let alternativeNames = "alternative_names"
+  static let alternativeNames = "alternativeNames"
 }
 
 struct GameMapper: Mappable {
